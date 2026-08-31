@@ -2,23 +2,29 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 import { loadEnv } from "vite";
 import { fileURLToPath } from "node:url";
 
+// Publishable (client-safe) backend identifiers, used as a last-resort fallback
+// when the build host does not expose the env vars.
+const FALLBACK_URL = "https://lidgfniqnywffvickayo.supabase.co";
+const FALLBACK_KEY = "sb_publishable_pFEWu2aox7RmKE6UsKMgwg_PYK0BdXO";
+
 export default defineConfig(({ mode }) => {
   // Load .env (all keys, not just VITE_*) so server code can read them too.
   const env = { ...loadEnv(mode, process.cwd(), ""), ...process.env } as Record<string, string>;
 
   // Accept either naming for the public API key.
-  const supabaseUrl = env["VITE_SUPABASE_URL"] || env["SUPABASE_URL"] || "";
+  const supabaseUrl = env["VITE_SUPABASE_URL"] || env["SUPABASE_URL"] || FALLBACK_URL;
   const supabaseKey =
     env["VITE_SUPABASE_PUBLISHABLE_KEY"] ||
     env["VITE_SUPABASE_ANON_KEY"] ||
     env["SUPABASE_PUBLISHABLE_KEY"] ||
     env["SUPABASE_ANON_KEY"] ||
-    "";
+    FALLBACK_KEY;
   const supabaseProjectId =
     env["VITE_SUPABASE_PROJECT_ID"] ||
     env["SUPABASE_PROJECT_ID"] ||
     supabaseUrl.replace(/^https?:\/\//, "").split(".")[0] ||
     "";
+
 
   // Ensure Vite's own import.meta.env object (used by bracket access like
   // import.meta.env['VITE_SUPABASE_URL']) contains these at build time, even
