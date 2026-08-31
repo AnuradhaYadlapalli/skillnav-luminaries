@@ -20,7 +20,16 @@ export default defineConfig(({ mode }) => {
     supabaseUrl.replace(/^https?:\/\//, "").split(".")[0] ||
     "";
 
+  // Ensure Vite's own import.meta.env object (used by bracket access like
+  // import.meta.env['VITE_SUPABASE_URL']) contains these at build time, even
+  // when the build host only provides the non-VITE_ names.
+  process.env["VITE_SUPABASE_URL"] = supabaseUrl;
+  process.env["VITE_SUPABASE_PUBLISHABLE_KEY"] = supabaseKey;
+  process.env["VITE_SUPABASE_ANON_KEY"] = supabaseKey;
+  process.env["VITE_SUPABASE_PROJECT_ID"] = supabaseProjectId;
+
   return {
+
     tanstackStart: {
       // src/server.ts is the SSR entry (error-page wrapper).
       server: { entry: "server" },
