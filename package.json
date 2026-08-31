@@ -1,7 +1,6 @@
 {
   "name": "skillnav",
   "private": true,
-  "sideEffects": false,
   "type": "module",
   "scripts": {
     "dev": "vite dev",
@@ -93,5 +92,5 @@
     "typescript-eslint": "^8.56.1",
     "vite": "8.1.5"
   },
-  "description": "SkillNav — AI-powered personalized learning path recommender"
+  "description": "SkillNav \u2014 AI-powered personalized learning path recommender"
 }
