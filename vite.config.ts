@@ -1,4 +1,5 @@
-import { defineConfig, loadEnv } from "@lovable.dev/vite-tanstack-config";
+import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { loadEnv } from "vite";
 import { fileURLToPath } from "node:url";
 
 export default defineConfig(({ mode }) => {
